@@ -26,8 +26,15 @@ pub fn console_putchar(c: usize) {
     sbi_call(SBI_CONSOLE_PUTCHAR, c, 0, 0);
 }
 
-use crate::board::QEMUExit;
-/// use sbi call to shutdown the kernel
+// use crate::board::QEMUExit;
+// /// use sbi call to shutdown the kernel
+// pub fn shutdown() -> ! {
+//     crate::board::QEMU_EXIT_HANDLE.exit_failure();
+// }
+
+const SBI_SHUTDOWN: usize = 8;
+
 pub fn shutdown() -> ! {
-    crate::board::QEMU_EXIT_HANDLE.exit_failure();
+    sbi_call(SBI_SHUTDOWN, 0, 0, 0);
+    panic!("It should shutdown!");
 }
